@@ -1,5 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
 <mapper namespace="memberMapper">
-  <cache-ref namespace=""/>
+  
+  <resultMap type="Member" id="memberResult">
+  	<result column="USER_ID" property="userId"/>
+  	<result column="USER_PWD" property="userPwd"/>
+  	<result column="USER_NAME" property="userName"/>
+  	<result column="EMAIL" property="email"/>
+  	<result column="GENDER" property="gender"/>
+  	<result column="AGE" property="age"/>
+  	<result column="PHONE" property="phone"/>
+  	<result column="ADDRESS" property="address"/>
+  	<result column="ENROLL_DATE" property="enrollDate"/>
+  	<result column="MODIFY_DATE" property="modifyDate"/>
+  	<result column="STATUS" property="status"/>
+  </resultMap>
+  
+  <select id="loginMember" resultMap="memberResult" >
+  select 
+	       USER_ID
+	     , USER_PWD
+	     , USER_NAME
+	     , EMAIL
+	     , GENDER
+	     , AGE
+	     , PHONE
+	     , ADDRESS
+	     , ENROLL_DATE
+	     , MODIFY_DATE
+	     , STATUS
+	  from member
+	 where status = 'Y'
+	   and USER_ID = #{userId}
+	   and USER_PWD = #{userPwd}
+  </select>
 </mapper>

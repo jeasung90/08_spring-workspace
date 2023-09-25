@@ -7,6 +7,17 @@
 <title>여가 메인이여</title>
 </head>
 <body>
-여가 메인
+	<jsp:include page="common/header.jsp"/>
+	
+	<div style="height: 600px;" >
+	
+	
+	</div>
+	
+	
+	
+	
+	
+	<jsp:include page="common/footer.jsp"/>
 </body>
 </html>
