@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>여가 메인이여</title>
 </head>
 <body>
-	<jsp:forward page="WEB-INF/views/main.jsp"/>
+여가 메인
 </body>
 </html>
