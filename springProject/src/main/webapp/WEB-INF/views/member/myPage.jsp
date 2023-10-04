@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -42,17 +43,11 @@
                    <input type="radio" name="" id="Female" value="F">
                    <label for="Female">여자</label><br>
                    
-                   <script>
-                   	 $(function(){
-                        if(${loginMember.gender eq 'M'}){
-                            $("#Male").attr("checked",true);
-                            $("#Female").attr("checked",false);
-                        }else{
-                            $("#Female").attr("checked",true);
-                            $("#Male").attr("checked",false);
-                        }
-                     })
-                   </script>
+                   <c:if test="${not empty loginMember.gender }">
+	                   <script>
+	                   	$("input[value=${loginMember.gender}]").attr("checked", true);
+	                   </script>
+                   </c:if>
                    
                </div>
                <br>
