@@ -1,17 +1,13 @@
 package com.kh.spring.member.controller;
 
-import java.awt.Dialog.ModalExclusionType;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.spring.member.model.service.MemberServiceImpl;
@@ -251,5 +247,59 @@ public class MemberController {
 	private String myPage() {
 		return "member/myPage";
 	}
+	
+	@RequestMapping("update.me")
+	public String updateMember(Member m, Model model, HttpSession session) {
+		
+		int result = mService.updateMember(m);
+		
+		if(result > 0) { // 성공 => 메인페이지 url 재요청
+			// db로 부터 수정된 회원정보를 다시 조회해와서
+			// session에 loginMember 키값으로 덮어씌워야함 *****
+			
+			Member updateMem =  mService.loginMember(m);
+			session.setAttribute("loginMember", updateMem);
+			
+			// alert 띄어줄 문구 담기
+			session.setAttribute("alertMsg", "성공적으로 회원정보 변경되었습니다.");
+			
+			// 마이페이지로 url 재요청
+			return "redirect:mypage.me";
+			
+		}else { // 실패 => 에러문구 담아서 에러페이지 포워딩
+			model.addAttribute("errorMsg","회원정보 수정 실패!");
+			
+			return "common/errorPage";
+		}
+	}
+	
+	@RequestMapping("delete.me")
+	public String deleteMember(String userPwd, String userId, HttpSession session,  Model model) {
+		// userPwd : 회원탈퇴시 사용자가 입력한 비밀번호 평문
+		// session : loginMember Member 객체의 userPwd 필드 : db로 부터 조회된 비번(암호문)
+		String encPwd = ((Member)session.getAttribute("loginMember")).getUserPwd();
+		
+		if(bcryptpasswordEncoder.matches(userPwd, encPwd)) { // 비번 일치
+			int result = mService.deleteMember(userId);
+			
+			if(result > 0) { // 탈퇴처리 성공 => session에 loginMember지우고 , alert문구 담기 => 메인보냄
+				session.removeAttribute("loginMember");
+				session.setAttribute("alertMsg", "성공적으로 회원탈퇴 되었습니다.");
+				return "redirect:/";
+			}else { // 탈퇴처리 실패 => 에러문구 담아서 에러페이지 포워딩
+				model.addAttribute("errorMsg","회원탈퇴 실패 앙");
+				return "common/errorPage";
+			}
+			
+		}else { // 비번 불일치 => 비번틀림 알리고 마이페이지 보여지게
+			session.setAttribute("alertMsg", "비밀번호를 잘못 입력하셨습니다. 확인해라");
+			return "redirect:mypage.me";
+		}
+		
+		
+		
+	}
+	
+	
 	
 }

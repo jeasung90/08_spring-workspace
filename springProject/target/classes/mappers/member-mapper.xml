@@ -76,8 +76,24 @@
   	 	  , #{phone}
   	 	  , #{address}
   	 	  ) 
-  	  	 
-  
   </insert>
+  <update id="updateMember">
+  	update 
+  		   member
+  	   set USER_NAME = #{userName}
+  	     , email = #{email}
+  	     , age = #{age}
+  	     , phone = #{phone}
+  	     , address = #{address}
+  	     , gender = #{gender}
+  	     , MODIFY_DATE = sysdate
+  	 where USER_ID = #{userId}
+  </update>
+  <update id="deleteMember">
+  	update
+  		   member
+  	   set status = 'N'
+  	 where user_id = #{userId}
+  </update>
   
 </mapper>
