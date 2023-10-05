@@ -49,7 +49,7 @@
                     		</c:when>
                     		<c:otherwise>
 		                        <!-- 첨부파일이 있는 경우-->
-		                        <a href="/spring/${b.changeName }" download="${b.originName }">${b.originName }</a>
+		                        <a href="${b.changeName }" download="${b.originName }">${b.originName }</a>
                     		</c:otherwise>
                     	</c:choose>
                     </td>

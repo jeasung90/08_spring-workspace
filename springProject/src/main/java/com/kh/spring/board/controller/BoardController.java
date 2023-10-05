@@ -113,7 +113,7 @@ public class BoardController {
 		
 			// 원본명, 서버에업로드된 경로를 Board b에 이어서 담기
 			b.setOriginName(upfile.getOriginalFilename());
-			b.setChangeName("/resources/uploadFiles/" + changeName);
+			b.setChangeName("resources/uploadFiles/" + changeName);
 		}
 		//넘어온 첨부파일 있을 경우 b : 제목,작성자,내용,파일원본명,파일저장경로
 		//넘어온 첨부파일 없을 경우 b : 제목,작성자,내용
