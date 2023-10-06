@@ -60,7 +60,8 @@
 	</update>
 	<select id="selectBoard" resultMap="boardResult"	>
 		select 
-			   BOARD_TITLE
+			   BOARD_NO
+			 , BOARD_TITLE
 			 , BOARD_WRITER
 			 , BOARD_CONTENT
 			 , ORIGIN_NAME
@@ -70,4 +71,21 @@
 		 where status = 'Y'
 		   and board_no = #{boardNo}
 	</select>
+	
+	<update id="deleteBoard">
+      update 
+            board
+          set status='N'
+       where board_no = #{boardNo}
+   </update>
+
+   <update id="updateBoard">
+      update
+            board
+         set board_title = #{boardTitle}
+              ,board_content = #{boardContent}
+              ,origin_name = #{originName}
+              ,change_name = #{changeName}
+       where board_no = #{boardNo}
+   </update>
 </mapper>

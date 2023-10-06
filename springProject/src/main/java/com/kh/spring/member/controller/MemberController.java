@@ -8,6 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.spring.member.model.service.MemberServiceImpl;
@@ -299,7 +300,21 @@ public class MemberController {
 		
 		
 	}
-	
-	
+
+	@ResponseBody
+	@RequestMapping("idCheck.me")
+	public String idCheck(String checkId) {
+		int count = mService.idCheck(checkId);
+		
+		/*
+		if(count >0) { // 이미 존재하는 아이디
+			return "NNNNN";
+		}else { // 가입가능
+			return "NNNNY";
+		}
+		 */
+		
+		return count > 0 ? "NNNNN" : "NNNNY";
+	}
 	
 }
