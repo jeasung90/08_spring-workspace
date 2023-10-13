@@ -12,6 +12,14 @@
 		<result column="CHANGE_NAME" property="changeName"/>
 	</resultMap>
 	
+	<resultMap type="Reply" id="replyResult">
+		<result column="REPLY_NO" property="replyNo"/>
+		<result column="REPLY_CONTENT" property="replyContent"/>
+		<result column="REF_BNO" property="refNoardNo"/>
+		<result column="REPLY_WRITER" property="replyWriter"/>
+		<result column="CREATE_DATE" property="createDate"/>
+	</resultMap>
+	
 	<select id="selectListCount" resultType="_int">
 		 select 
 				count(*)
@@ -88,4 +96,56 @@
               ,change_name = #{changeName}
        where board_no = #{boardNo}
    </update>
+   
+   <select id="selectReplyList" resultMap="replyResult">
+   		select
+   			   reply_no
+   			 , REPLY_WRITER
+   			 , REPLY_CONTENT
+   			 , to_char(CREATE_DATE, 'YYYY-MM-DD') as "CREATE_DATE"
+          from reply
+   		 where REF_BNO = #{boardNo}
+   		   and status = 'Y'
+   		 order
+   		 	by  reply_no desc
+   </select>
+   <insert id="insertReply">
+   		insert 
+		  into reply
+		     (
+		       REPLY_NO
+		     , REPLY_CONTENT
+		     , REF_BNO
+		     , REPLY_WRITER
+		     )
+		values
+		     (
+		       seq_rno.nextval
+		     , #{replyContent}
+		     , #{refNoardNo}
+		     , #{replyWriter}
+		     )
+   </insert>
+   <select id="selectTopBoardList" resultMap="boardResult">
+   		select *
+			from(
+			        select
+			               BOARD_NO
+			             , BOARD_TITLE
+			             , BOARD_WRITER
+			             , COUNT
+			             , to_char( CREATE_DATE , 'YYYY-MM-DD') as "CREATE_DATE"   
+			             , ORIGIN_NAME
+			          from board
+			         where STATUS = 'Y'
+			         order
+			            by count desc
+			)
+			where rownum BETWEEN 1 and 5
+   </select>
+   <delete id="deleteReply">
+   		delete
+   		  from reply
+   		 where REPLY_NO = #{replyNo}
+   </delete>
 </mapper>

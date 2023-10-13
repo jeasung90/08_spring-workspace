@@ -1,12 +1,22 @@
 package com.kh.spring.board.model.vo;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Setter
+@Getter
+@ToString
 public class Reply {
-/*
-	REPLY_NO
-	REPLY_CONTENT
-	REF_BNO
-	REPLY_WRITER
-	CREATE_DATE
-	STATUS
-	*/
+
+	private int replyNo;
+	private String replyContent;
+	private int refNoardNo;
+	private String replyWriter;
+	private String createDate;
+	private String status;
 }

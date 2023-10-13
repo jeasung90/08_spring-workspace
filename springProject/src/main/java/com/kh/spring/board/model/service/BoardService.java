@@ -30,5 +30,12 @@ public interface BoardService {
 	
 	// 7. 댇글 작성용 서비스 (ajax)
 	int insertReply(Reply r);
+	
+	// 8. 조회수 top5 리스트 조회용 서비스
+	ArrayList<Board> selectTopBoardList();
+	
+	// 9. 댇글 삭제 서비스
+	int deleteReply(Reply r);
+	
 
 }
